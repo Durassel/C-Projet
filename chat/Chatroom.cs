@@ -12,6 +12,6 @@ namespace Projet.chat
 
         void join(Chatter c);
 
-        string getTopic();
+        string Topic { get; set;  }
     }
 }

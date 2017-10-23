@@ -6,21 +6,28 @@ namespace Projet.chat
 {
     class TextChatter : Chatter
     {
-        private String pseudo;
+        private String alias;
 
-        public TextChatter(String pseudo)
+        public TextChatter(String alias)
         {
-            this.pseudo = pseudo;
+            this.alias = alias;
         }
 
         public void receiveAMessage(String msg, Chatter c)
         {
-            Console.WriteLine("(At " + pseudo + ") : " + c.getAlias() + " $> " + msg);
+            Console.WriteLine("(At " + alias + ") : " + c.Alias + " $> " + msg);
         }
 
-        public String getAlias()
+        public String Alias
         {
-            return this.pseudo;
+            get
+            {
+                return this.alias;
+            }
+            set
+            {
+                this.alias = value;
+            }
         }
     }
 }

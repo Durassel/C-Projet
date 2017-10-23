@@ -12,7 +12,8 @@ namespace Projet
     {
         static void Main(string[] args)
         {
-            /* Step 1
+            /*
+            // Step 1
             // Chatters
             Chatter bob = new TextChatter("Bob");
             Chatter joe = new TextChatter("Joe");
@@ -34,7 +35,8 @@ namespace Projet
             cr.post("Toi aussi tu chat sur les forums de jeux pendant les TP, Bob ? ",joe);
             */
 
-            /* Step 2 */
+            // /*
+            // Step 2 
             AuthentificationManager am = new Authentification();
             // users management
             try
@@ -83,6 +85,7 @@ namespace Projet
             } catch (System.IO.IOException e) {
                 Console.WriteLine(e);
             }
+            // */
 
             Console.Read();
         }

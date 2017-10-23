@@ -8,6 +8,6 @@ namespace Projet.chat
     {
         void receiveAMessage(String msg, Chatter c);
 
-        string getAlias();
+        string Alias { get; set; }
     }
 }

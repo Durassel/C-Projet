@@ -18,7 +18,7 @@ namespace Projet.chat
         {
             if (!chatters.Contains(c)) {
                 chatters.Add(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.getAlias() + " has join the room.");
+                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Alias + " has join the room.");
             }
         }
 
@@ -30,7 +30,7 @@ namespace Projet.chat
                 }
             } else {
                 // Throw exception : sender not in the chatroom
-                Console.WriteLine("Error : message \"" + msg + "\" could not be sent. Sender " + c.getAlias() + " not in the chatroom");
+                Console.WriteLine("Error : message \"" + msg + "\" could not be sent. Sender " + c.Alias + " not in the chatroom");
             }
         }
 
@@ -38,15 +38,22 @@ namespace Projet.chat
         {
             if (chatters.Contains(c)) {
                 chatters.Remove(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.getAlias() + " has quit the room.");
+                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Alias + " has quit the room.");
             } else {
                 // Throw exception : Chatter not in the chatroom can't quit
             }
         }
 
-        public String getTopic()
+        public String Topic
         {
-            return this.topic;
+            get
+            {
+                return this.topic;
+            }
+            set
+            {
+                this.topic = value;
+            }
         }
     }
 }

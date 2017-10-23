@@ -10,7 +10,6 @@ namespace Projet.authentification
     [Serializable]
     public class User
     {
-        private static long serialVersionUID = 2;
         private String login;
         private String password;
 
