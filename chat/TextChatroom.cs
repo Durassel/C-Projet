@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Projet.chat
 {
@@ -12,14 +11,6 @@ namespace Projet.chat
         public TextChatroom(String topic)
         {
             this.topic = topic;
-        }
-
-        public void join(Chatter c)
-        {
-            if (!chatters.Contains(c)) {
-                chatters.Add(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Alias + " has join the room.");
-            }
         }
 
         public void post(String msg, Chatter c)
@@ -44,16 +35,20 @@ namespace Projet.chat
             }
         }
 
+        public void join(Chatter c)
+        {
+            if (!chatters.Contains(c)) {
+                chatters.Add(c);
+                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Alias + " has join the room.");
+            } else {
+                // Throw exception : Chatter already in the chatroom
+            }
+        }
+
         public String Topic
         {
-            get
-            {
-                return this.topic;
-            }
-            set
-            {
-                this.topic = value;
-            }
+            get { return this.topic; }
+            set { this.topic = value; }
         }
     }
 }

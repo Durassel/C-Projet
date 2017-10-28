@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Projet.chat
 {
@@ -20,14 +18,8 @@ namespace Projet.chat
 
         public String Alias
         {
-            get
-            {
-                return this.alias;
-            }
-            set
-            {
-                this.alias = value;
-            }
+            get { return this.alias; }
+            set { this.alias = value; }
         }
     }
 }

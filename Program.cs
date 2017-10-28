@@ -1,10 +1,6 @@
 ﻿using Projet.authentification;
 using Projet.chat;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projet
 {
@@ -12,8 +8,8 @@ namespace Projet
     {
         static void Main(string[] args)
         {
-            /*
             // Step 1
+            Console.WriteLine("STEP 1 : Chat package" + Environment.NewLine);
             // Chatters
             Chatter bob = new TextChatter("Bob");
             Chatter joe = new TextChatter("Joe");
@@ -33,11 +29,12 @@ namespace Projet
             cr.join(joe);
             cr.post("Tiens, salut Joe !", bob);
             cr.post("Toi aussi tu chat sur les forums de jeux pendant les TP, Bob ? ",joe);
-            */
+            Console.Read();
 
-            // /*
             // Step 2 
+            Console.WriteLine(Environment.NewLine + "STEP 2 : Authentification package" + Environment.NewLine);
             AuthentificationManager am = new Authentification();
+
             // users management
             try
             {
@@ -48,9 +45,9 @@ namespace Projet
                 am.removeUser("bob");
                 Console.WriteLine("Bob has been removes twice !");
             } catch (UserUnknownException e) {
-                Console.WriteLine(e.login + " : user unknown (enable to remove) !");
+                Console.WriteLine(e.alias + " : user unknown (enable to remove) !");
             } catch (UserExistsException e) {
-                Console.WriteLine(e.login + " has already been added !");
+                Console.WriteLine(e.alias + " has already been added !");
             }
 
             // authentification
@@ -63,11 +60,11 @@ namespace Projet
                 am.authentify("bob", "456");
                 Console.WriteLine("Invalid password !");
             } catch (WrongPasswordException e) {
-                Console.WriteLine(e.login + " has provided an invalid password !");
+                Console.WriteLine(e.alias + " has provided an invalid password !");
             } catch (UserExistsException e) {
-                Console.WriteLine(e.login + " has already been added !");
+                Console.WriteLine(e.alias + " has already been added !");
             } catch (UserUnknownException e) {
-                Console.WriteLine(e.login + " : user unknown (enable to remove) !");
+                Console.WriteLine(e.alias + " : user unknown (enable to remove) !");
             }
 
             // persistance
@@ -79,14 +76,16 @@ namespace Projet
                 am1.authentify("bob", "123");
                 Console.WriteLine("Loading complete !");
             } catch (UserUnknownException e) {
-                Console.WriteLine(e.login + " is unknown ! error during the saving/loading.");
+                Console.WriteLine(e.alias + " is unknown ! error during the saving/loading.");
             } catch (WrongPasswordException e) {
-                Console.WriteLine(e.login + " has provided an invalid password ! error during the saving/loading.");
+                Console.WriteLine(e.alias + " has provided an invalid password ! error during the saving/loading.");
             } catch (System.IO.IOException e) {
                 Console.WriteLine(e);
             }
-            // */
+            Console.Read();
 
+            // Step 3
+            Console.WriteLine(Environment.NewLine + "STEP 3 : Net package" + Environment.NewLine);
             Console.Read();
         }
     }

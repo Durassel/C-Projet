@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -24,26 +23,30 @@ namespace Projet.authentification
 
         public void addUser(String login, String password)
         {
-            if (users.ContainsKey(login))
+            if (!users.ContainsKey(login)) {
+                users[login] = new User(login, password);
+            } else {
                 throw new UserExistsException(login);
-            else
-                users[login] = new User(login, password);		
+            }
 	    }
 
         public void removeUser(String login)
         {
-            if (!users.ContainsKey(login))
+            if (!users.ContainsKey(login)) {
                 throw new UserUnknownException(login);
+            }
             users.Remove(login);
         }
 
         public void authentify(String login, String password)
         {
-		    if(!users.ContainsKey(login))
-                throw new UserUnknownException(login);	
+            if (!users.ContainsKey(login)) {
+                throw new UserUnknownException(login);
+            }
 
-		    if(users[login].Password.CompareTo(password) != 0)
+            if (users[login].Password.CompareTo(password) != 0) {
                 throw new WrongPasswordException(login);
+            }
         }
 
         public AuthentificationManager load(String path)

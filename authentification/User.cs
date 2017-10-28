@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projet.authentification
 {
@@ -21,26 +16,14 @@ namespace Projet.authentification
 
         public String Login
         {
-            get
-            {
-                return this.login;
-            }
-            set
-            {
-                this.login = value;
-            }
+            get { return this.login; }
+            set { this.login = value; }
         }
 
         public String Password
         {
-            get
-            {
-                return this.password;
-            }
-            set
-            {
-                this.password = value;
-            }
+            get { return this.password; }
+            set { this.password = value; }
         }
     }
 }
