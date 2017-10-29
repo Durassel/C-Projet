@@ -4,7 +4,7 @@ namespace Projet.authentification
 {
     public class UserExistsException : AuthentificationException
     {
-        public UserExistsException(String str) : base(str)
+        public UserExistsException(String alias) : base(alias)
         {
             
         }

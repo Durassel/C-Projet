@@ -12,10 +12,11 @@ namespace Projet.authentification
 
         public Authentification()
         {
+            // Load users from file
             try {
                 this.load("users.txt");
                 Console.WriteLine("Loading is done");
-            } catch (System.IO.IOException e) {
+            } catch (System.IO.IOException e) { // If an error occured, declaration of an empty users array
                 Console.WriteLine(e);
                 users = new Dictionary<string, User>();
             }
@@ -23,6 +24,7 @@ namespace Projet.authentification
 
         public void addUser(String login, String password)
         {
+            // Check if this user doesn't exist
             if (!users.ContainsKey(login)) {
                 users[login] = new User(login, password);
             } else {
@@ -32,6 +34,7 @@ namespace Projet.authentification
 
         public void removeUser(String login)
         {
+            // Check if the user exists
             if (!users.ContainsKey(login)) {
                 throw new UserUnknownException(login);
             }
@@ -40,10 +43,11 @@ namespace Projet.authentification
 
         public void authentify(String login, String password)
         {
+            // Check if the user exists
             if (!users.ContainsKey(login)) {
                 throw new UserUnknownException(login);
             }
-
+            // Check if the password is correct
             if (users[login].Password.CompareTo(password) != 0) {
                 throw new WrongPasswordException(login);
             }
@@ -51,7 +55,7 @@ namespace Projet.authentification
 
         public AuthentificationManager load(String path)
         {
-            try {
+            try { // Deserialization of users (cast the stream from file)
                 FileStream input = new FileStream(path, FileMode.Open);
                 BinaryFormatter binaryf = new BinaryFormatter();
                 users = (Dictionary<String, User>) binaryf.Deserialize(input);
@@ -64,7 +68,7 @@ namespace Projet.authentification
 
         public void save(String path)
         {
-            try {
+            try { // Serialization of users
                 FileStream output = new FileStream(path, FileMode.Create);
                 BinaryFormatter binaryf = new BinaryFormatter();
                 binaryf.Serialize(output, users);

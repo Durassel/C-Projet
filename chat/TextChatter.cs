@@ -4,22 +4,45 @@ namespace Projet.chat
 {
     class TextChatter : Chatter
     {
-        private String alias;
+        private String pseudo;
+        private String password;
 
-        public TextChatter(String alias)
+        public TextChatter(String pseudo) : base()
         {
-            this.alias = alias;
+            this.pseudo = pseudo;
         }
 
-        public void receiveAMessage(String msg, Chatter c)
+        public TextChatter(String pseudo, String password) : base()
         {
-            Console.WriteLine("(At " + alias + ") : " + c.Alias + " $> " + msg);
+            this.pseudo = pseudo;
+            this.password = password;
         }
 
-        public String Alias
+        public String Pseudo
         {
-            get { return this.alias; }
-            set { this.alias = value; }
+            get { return this.pseudo; }
+            set { this.pseudo = value; }
+        }
+
+        public String Password
+        {
+            get { return this.password; }
+            set { this.password = value; }
+        }
+
+        public void receiveAMessage(String message, Chatter c)
+        {
+            Console.WriteLine("(At " + pseudo + ") : " + c.Pseudo + " $> " + message);
+        }
+
+        public void joinNotification(Chatter c)
+        {
+            Console.WriteLine(c.Pseudo + " joined");
+        }
+
+        public void quitNotification(Chatter c)
+        {
+            Console.WriteLine(c.Pseudo + " disconnected");
         }
     }
 }

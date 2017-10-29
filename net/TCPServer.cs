@@ -10,11 +10,16 @@ namespace Projet.net
     [Serializable]
     public abstract class TCPServer : MessageConnection
     {
-	    private enum Mode { treatClient, treatConnections }
+	    private enum Mode { treatClient, treatConnections } // Two mode : client request / connection request
         private Mode mode = Mode.treatConnections;
-        private TcpClient comm;
-        private TcpListener wait;
+        private TcpClient comm; // Communication
+        private TcpListener wait; // Listener
         private int port;
+
+        public int Port
+        {
+            get { return this.port; }
+        }
 
         public void startServer(int port)
         {
@@ -22,7 +27,7 @@ namespace Projet.net
             Console.WriteLine("Server started");
             wait = new TcpListener(new IPAddress(new byte[] { 127, 0, 0, 1 }), port);
             new Thread(this.run).Start();
-            Console.WriteLine("thread started");
+            Console.WriteLine("Thread started");
         }
 
         public void stopServer()
@@ -34,28 +39,27 @@ namespace Projet.net
         {
             if (mode == Mode.treatConnections) {
                 while (true) {
-                    try
-                    {
-                        comm = wait.AcceptTcpClient();
+                    try {
+                        comm = wait.AcceptTcpClient(); // New client communication
                         Console.WriteLine("Connection established @" + comm);
-
                         TCPServer clone = Clone(this);
-                        clone.mode = Mode.treatClient;
+                        clone.mode = Mode.treatClient; // Change mode
                         new Thread(clone.run).Start();
                     } catch (System.IO.IOException e) {
                         Console.WriteLine(e.ToString());
                     }
                 }
-            } else {
+            } else { // Client side
                 Console.WriteLine("Dealing with client");
                 manageClient(comm);
             }
         }
 
-        public static TCPServer Clone(TCPServer obj)
+        public abstract void manageClient(TcpClient comm); // Client/Server manage the request (each case : join, post, list topics, create topic ...)
+
+        public static TCPServer Clone(TCPServer obj) // Clone a TCPServer object
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
+            using (MemoryStream ms = new MemoryStream()) {
                 BinaryFormatter f = new BinaryFormatter();
                 f.Serialize(ms, obj);
                 ms.Position = 0;
@@ -63,18 +67,11 @@ namespace Projet.net
             }
         }
 
-        public int Port
-        {
-            get { return this.port; }
-        }
-
-        public abstract void manageClient(TcpClient comm);
-
         public Message getMessage()
         {
             try {
                 BinaryFormatter bf = new BinaryFormatter();
-                Message message = (Message)bf.Deserialize(comm.GetStream());
+                Message message = (Message) bf.Deserialize(comm.GetStream());
                 Console.WriteLine("Server receive : " + message);
                 return message;
             } catch (Exception e) {

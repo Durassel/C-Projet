@@ -6,9 +6,9 @@ namespace Projet.authentification
     {
         public String alias;
 
-        public AuthentificationException(String str)
+        public AuthentificationException(String alias)
         {
-            this.alias = str;
+            this.alias = alias;
         }
     }
 }

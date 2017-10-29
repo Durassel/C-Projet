@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Projet.chat
 {
     interface Chatter
     {
+        string Pseudo { get; set; }
+        string Password { get; set; }
         void receiveAMessage(String msg, Chatter c);
-
-        string Alias { get; set; }
+        void joinNotification(Chatter c);
+        void quitNotification(Chatter c);
     }
 }

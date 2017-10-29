@@ -7,9 +7,9 @@ namespace Projet.net
 {
     class TCPClient : MessageConnection
     {
-        private TcpClient client = new TcpClient();
-        private IPAddress address;
-        private int port;
+        private TcpClient client = new TcpClient(); // Client connection to the server
+        private IPAddress address; // Address of the server
+        private int port; // Port to communicate
 
         public IPAddress Address
         {
@@ -30,12 +30,13 @@ namespace Projet.net
         public void connect()
         {
             client.Connect(this.address, this.port);
-            Console.WriteLine("Connection established");
+            Console.WriteLine("Connection established.");
         }
 
         public void disconnect()
         {
             client.Close();
+            Console.WriteLine("Connection closed.");
         }
 
         public Message getMessage()

@@ -5,50 +5,52 @@ namespace Projet.chat
 {
     class TextChatroom : Chatroom
     {
-        private List<Chatter> chatters = new List<Chatter>();
-        private String topic;
+        private List<Chatter> chatters = new List<Chatter>(); // List of chatters in this chatroom
+        private String topic; // Subject of this chatroom
 
         public TextChatroom(String topic)
         {
             this.topic = topic;
         }
 
-        public void post(String msg, Chatter c)
+        public String Topic
         {
+            get { return this.topic; }
+            set { this.topic = value; }
+        }
+
+        public void post(String message, Chatter c)
+        {
+            // Check if the chatter is in the chatroom
             if (chatters.Contains(c)) {
                 foreach (Chatter chatter in chatters) {
-                    chatter.receiveAMessage(msg, c);
+                    chatter.receiveAMessage(message, c);
                 }
             } else {
-                // Throw exception : sender not in the chatroom
-                Console.WriteLine("Error : message \"" + msg + "\" could not be sent. Sender " + c.Alias + " not in the chatroom");
+                throw new Exception("The message cannot be sent. Sender isn't in the chatroom.");
             }
         }
 
         public void quit(Chatter c)
         {
+            // Check if the chatter is in the chatroom
             if (chatters.Contains(c)) {
                 chatters.Remove(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Alias + " has quit the room.");
+                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " leaved the chatroom.");
             } else {
-                // Throw exception : Chatter not in the chatroom can't quit
+                throw new Exception(c.Pseudo + " cannot leave the chatroom. He isn't in the chatroom.");
             }
         }
 
         public void join(Chatter c)
         {
+            // Check if the chatter isn't in the chatroom
             if (!chatters.Contains(c)) {
                 chatters.Add(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Alias + " has join the room.");
+                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " has join the chatroom.");
             } else {
-                // Throw exception : Chatter already in the chatroom
+                throw new Exception(c.Pseudo + " cannot join the chatroom. He is already in the chatroom.");
             }
-        }
-
-        public String Topic
-        {
-            get { return this.topic; }
-            set { this.topic = value; }
         }
     }
 }
