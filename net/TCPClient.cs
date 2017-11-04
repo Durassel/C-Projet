@@ -1,19 +1,21 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Projet.net
 {
-    class TCPClient : MessageConnection
+    [Serializable]
+    public class TCPClient : MessageConnection
     {
         private TcpClient client = new TcpClient(); // Client connection to the server
         private IPAddress address; // Address of the server
         private int port; // Port to communicate
 
-        public IPAddress Address
+        public String Address
         {
-            get { return this.address; }
+            get { return this.address.ToString(); }
         }
 
         public int Port
@@ -41,17 +43,24 @@ namespace Projet.net
 
         public Message getMessage()
         {
-            BinaryFormatter bf = new BinaryFormatter();
-            Message message = (Message) bf.Deserialize(client.GetStream());
-            Console.WriteLine("Client receive : " + message);
-            return message;
+            try {
+                NetworkStream stream = client.GetStream();
+                IFormatter formatter = new BinaryFormatter();
+                Message message = (Message) formatter.Deserialize(stream);
+                Console.WriteLine("Client receive : " + message);
+                return message;
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
         }
 
         public void sendMessage(Message message)
         {
             Console.WriteLine("Client send : " + message);
-            BinaryFormatter bf = new BinaryFormatter();
-            bf.Serialize(client.GetStream(), message);
+            IFormatter formatter = new BinaryFormatter();
+            NetworkStream stream = client.GetStream();
+            formatter.Serialize(stream, message);
         }
     }
 }

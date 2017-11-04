@@ -31,7 +31,7 @@ namespace Projet.server
             this.textChatroom = (TextChatroom) chatroom;
         }
 
-        public override void manageClient(TcpClient comm)
+        public override void manageClient(TcpClient comm) // Manage client actions on a chatroom
         {
             try {
                 Message message;
@@ -40,14 +40,13 @@ namespace Projet.server
                         case Header.JOIN :
                             pseudo = message.Data[0];
                             password = message.Data[1];
-                            Authentification am = new Authentification();
-                            try {
-                                am.authentify(pseudo, password);
+                            Authentification a = new Authentification();
+                            try { // Test user authentification
+                                a.authentify(pseudo, password);
                                 textChatroom.join(this);
                             } catch (Exception e) {
                                 Console.WriteLine(e);
                             }
-                            joinNotification(this);
                             break;
                         case Header.POST :
                             String msg = message.Data[1];
@@ -56,8 +55,6 @@ namespace Projet.server
                         case Header.QUIT :
                             textChatroom.quit(this);
                             break;
-                        default:
-                            break;
                     }
                 }
             } catch (Exception e) {
@@ -65,35 +62,13 @@ namespace Projet.server
             }
         }
 
-        public void receiveAMessage(String msg, Chatter c)
+        public void receiveAMessage(String message, Chatter c)
         {
             List<String> data = new List<String>(2);
             data.Add(c.Pseudo);
-            data.Add(msg);
+            data.Add(message);
             try {
                 sendMessage(new Message(Header.GET, data));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
-        public void joinNotification(Chatter c)
-        {
-            List<String> data = new List<String>(1);
-            data.Add(c.Pseudo);
-            try {
-                sendMessage(new Message(Header.JOINED, data));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
-            }
-        }
-
-        public void quitNotification(Chatter c)
-        {
-            List<String> data = new List<String>(1);
-            data.Add(c.Pseudo);
-            try {
-                sendMessage(new Message(Header.LEFT, data));
             } catch (System.IO.IOException e) {
                 Console.WriteLine(e.ToString());
             }

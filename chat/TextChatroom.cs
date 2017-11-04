@@ -16,7 +16,6 @@ namespace Projet.chat
         public String Topic
         {
             get { return this.topic; }
-            set { this.topic = value; }
         }
 
         public void post(String message, Chatter c)

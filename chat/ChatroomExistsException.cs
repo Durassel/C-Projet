@@ -4,7 +4,7 @@ namespace Projet.chat
 {
     class ChatroomExistsException : Exception
     {
-        public ChatroomExistsException() : base("Chatroom already exists.")
+        public ChatroomExistsException() : base("This chatroom already exists.")
         {
             
         }

@@ -30,7 +30,7 @@ namespace Projet.chat
             if (!chatrooms.ContainsKey(topic)) {
                 chatrooms[topic] = new TextChatroom(topic);
             } else {
-                throw new Exception("This topic already exists.");
+                throw new ChatroomExistsException();
             }
 	    }
     }

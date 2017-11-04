@@ -16,20 +16,17 @@ namespace Projet.server
                 Message message;
                 while ((message = getMessage()) != null) { // Read message
                     switch (message.head) { // Treat message
-                        case Header.LIST_TOPICS:
+                        case Header.LIST_TOPICS :
                             List<String> topics = tcpTopicsManager.listTopics();
-                            Message msg = new Message(Header.LIST_TOPICS, topics);
-                            sendMessage(msg);
+                            sendMessage(new Message(Header.LIST_TOPICS, topics));
                             break;
-                        case Header.CREATE_TOPIC:
-                            tcpTopicsManager.createTopic(message.Data[0]);
+                        case Header.JOIN_TOPIC :
+                            String topic = message.Data[0];
+                            sendMessage(new Message(Header.JOIN_TOPIC, (tcpTopicsManager.getTopicPort(topic)).ToString()));
                             break;
-                        case Header.JOIN_TOPIC:
-                            String topicToJoin = message.Data[0];
-                            Message msg2 = new Message(Header.JOIN_TOPIC, (tcpTopicsManager.getTopicPort(topicToJoin)).ToString());
-                            sendMessage(msg2);
-                            break;
-                        default:
+                        case Header.CREATE_TOPIC :
+                            topic = message.Data[0];
+                            tcpTopicsManager.createTopic(topic);
                             break;
                     }
                 }

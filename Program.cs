@@ -1,6 +1,8 @@
 ﻿using Projet.authentification;
 using Projet.chat;
+using Projet.net;
 using System;
+using static Projet.net.Message;
 
 namespace Projet
 {
@@ -8,6 +10,7 @@ namespace Projet
     {
         static void Main(string[] args)
         {
+            /*
             // Step 1
             Console.WriteLine("STEP 1 : Chat package" + Environment.NewLine);
             // Chatters
@@ -83,10 +86,7 @@ namespace Projet
                 Console.WriteLine(e);
             }
             Console.Read();
-
-            // Step 3
-            Console.WriteLine(Environment.NewLine + "STEP 3 : Net package" + Environment.NewLine);
-            Console.Read();
+            */
         }
     }
 }

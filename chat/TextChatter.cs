@@ -34,15 +34,5 @@ namespace Projet.chat
         {
             Console.WriteLine("(At " + pseudo + ") : " + c.Pseudo + " $> " + message);
         }
-
-        public void joinNotification(Chatter c)
-        {
-            Console.WriteLine(c.Pseudo + " joined");
-        }
-
-        public void quitNotification(Chatter c)
-        {
-            Console.WriteLine(c.Pseudo + " disconnected");
-        }
     }
 }
