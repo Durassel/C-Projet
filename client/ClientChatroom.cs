@@ -2,11 +2,12 @@
 using Projet.net;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using static Projet.net.Message;
 
 namespace Projet.client
 {
-    class ClientChatroom : TCPClient, Chatroom
+    public class ClientChatroom : TCPClient, Chatroom
     {
         private Chatter chatter;
 
@@ -41,8 +42,8 @@ namespace Projet.client
         {
             try {
                 List<String> data = new List<String>(2);
-                user.Add(c.Pseudo);
-                user.Add(message);
+                data.Add(c.Pseudo);
+                data.Add(message);
                 sendMessage(new Message(Header.POST, data));
             } catch (System.IO.IOException e) {
                 Console.WriteLine(e.ToString());
@@ -53,7 +54,8 @@ namespace Projet.client
         {
             try {
                 sendMessage(new Message(Header.QUIT, c.Pseudo));
-                this.disconnect();
+                Thread.Sleep(500);
+                this.disconnect(); // Close connection between client and server when clients receive notification
             } catch (System.IO.IOException e) {
                 Console.WriteLine(e.ToString());
             }
@@ -68,6 +70,16 @@ namespace Projet.client
                         case Header.GET :
                             if (chatter != null) {
                                 chatter.receiveAMessage(message.Data[1], new TextChatter(message.Data[0]));
+                            }
+                            break;
+                        case Header.JOINED:
+                            if (chatter != null) {
+                                chatter.joinNotification(new TextChatter(message.Data[0]));
+                            }
+                            break;
+                        case Header.LEFT :
+                            if (chatter != null) {
+                                chatter.quitNotification(new TextChatter(message.Data[0]));
                             }
                             break;
                     }

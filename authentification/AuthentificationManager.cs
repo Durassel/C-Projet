@@ -2,7 +2,7 @@
 
 namespace Projet.authentification
 {
-    interface AuthentificationManager
+    public interface AuthentificationManager
     {
         void addUser(String login, String password);
         void removeUser(String login);

@@ -27,12 +27,12 @@ namespace Projet.net
             Console.WriteLine("Server started");
             wait = new TcpListener(new IPAddress(new byte[] { 127, 0, 0, 1 }), port);
             new Thread(this.run).Start();
-            wait.Start();
         }
 
         public void stopServer()
         {
             wait.Stop();
+            Console.WriteLine("Server stopped");
         }
 
         public object Clone()
@@ -44,17 +44,20 @@ namespace Projet.net
         {
             if (mode == Mode.treatConnections) {
                 while (true) {
+                    wait.Start(); // ~~~ bof ~~~
                     try {
                         comm = wait.AcceptTcpClient(); // New client communication
                         Console.WriteLine("Connection established @" + comm);
-                        TCPServer clone = (TCPServer) this.Clone();
+                        TCPServer clone = (TCPServer)this.Clone();
                         clone.mode = Mode.treatClient; // Change mode
                         new Thread(clone.run).Start();
                     } catch (System.IO.IOException e) {
-                        Console.WriteLine(e.ToString());
+                        //Console.WriteLine(e.ToString());
+                    } catch (SocketException e) {
+                        //Console.WriteLine(e.ToString());
                     }
                 }
-            } else { // Client side
+            } else { // Manage client request
                 manageClient(comm);
             }
         }
@@ -70,7 +73,6 @@ namespace Projet.net
                 Console.WriteLine("Server receive : " + message);
                 return message;
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
                 return null;
             }
         }

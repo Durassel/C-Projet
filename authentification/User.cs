@@ -25,5 +25,10 @@ namespace Projet.authentification
             get { return this.password; }
             set { this.password = value; }
         }
+
+        public override string ToString()
+        {
+            return "Login : " + this.login + " / password : " + this.password;
+        }
     }
 }

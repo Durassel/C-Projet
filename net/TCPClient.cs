@@ -32,13 +32,13 @@ namespace Projet.net
         public void connect()
         {
             client.Connect(this.address, this.port);
-            Console.WriteLine("Connection established.");
+            //Console.WriteLine("Connection established.");
         }
 
         public void disconnect()
         {
             client.Close();
-            Console.WriteLine("Connection closed.");
+            //Console.WriteLine("Connection closed.");
         }
 
         public Message getMessage()
@@ -46,18 +46,17 @@ namespace Projet.net
             try {
                 NetworkStream stream = client.GetStream();
                 IFormatter formatter = new BinaryFormatter();
-                Message message = (Message) formatter.Deserialize(stream);
-                Console.WriteLine("Client receive : " + message);
+                Message message = (Message)formatter.Deserialize(stream);
+                //Console.WriteLine("Client receive : " + message);
                 return message;
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
                 return null;
             }
         }
 
         public void sendMessage(Message message)
         {
-            Console.WriteLine("Client send : " + message);
+            //Console.WriteLine("Client send : " + message);
             IFormatter formatter = new BinaryFormatter();
             NetworkStream stream = client.GetStream();
             formatter.Serialize(stream, message);

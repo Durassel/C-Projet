@@ -4,21 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Projet
+namespace TestClient
 {
-    class TestTCPClient
+    class Program
     {
         static void Main(string[] args)
         {
             // Test de base de l'échange de messages entre serveur/client
             ClientTopicsManager client = new ClientTopicsManager();
-            try {
+            try
+            {
                 client.setServer("127.0.0.1", 2453);
                 client.connect();
 
-                client.createTopic("topic 1");
-                client.createTopic("topic 2");
-
+                Thread.Sleep(2000);
                 List<String> topics = client.listTopics();
                 Console.WriteLine("The openned topics are : ");
                 foreach (String topic in topics)
@@ -28,14 +27,15 @@ namespace Projet
 
                 Chatroom chatroom = client.joinTopic("topic 2");
 
-                Chatter chatter = new TextChatter("bob", "123");
+                Chatter chatter = new TextChatter("joe", "456");
                 chatroom.join(chatter);
 
-                chatroom.post("mon super message", chatter);
-                Thread.Sleep(10000);
+                chatroom.post("un autre message", chatter);
+                Thread.Sleep(5000);
                 chatroom.quit(chatter);
             }
-            catch (Exception e) {
+            catch (Exception e)
+            {
                 Console.WriteLine(e.ToString());
             }
         }

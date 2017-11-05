@@ -6,7 +6,7 @@ using static Projet.net.Message;
 
 namespace Projet.server
 {
-    class ServerTopicsManager : TCPServer
+    public class ServerTopicsManager : TCPServer
     {
         private TCPTopicsManager tcpTopicsManager = new TCPTopicsManager();
 

@@ -2,7 +2,7 @@
 
 namespace Projet.chat
 {
-    interface Chatroom
+    public interface Chatroom
     {
         string Topic { get; }
         void post(String msg, Chatter c);

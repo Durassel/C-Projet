@@ -49,8 +49,7 @@ namespace Projet.server
                             }
                             break;
                         case Header.POST :
-                            String msg = message.Data[1];
-                            textChatroom.post(msg, this);
+                            textChatroom.post(message.Data[1], this);
                             break;
                         case Header.QUIT :
                             textChatroom.quit(this);
@@ -69,6 +68,28 @@ namespace Projet.server
             data.Add(message);
             try {
                 sendMessage(new Message(Header.GET, data));
+            } catch (System.IO.IOException e) {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        public void joinNotification(Chatter c)
+        {
+            List<String> data = new List<String>(1);
+            data.Add(c.Pseudo);
+            try {
+                sendMessage(new Message(Header.JOINED, data));
+            } catch (System.IO.IOException e) {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        public void quitNotification(Chatter c)
+        {
+            List<String> data = new List<String>(1);
+            data.Add(c.Pseudo);
+            try {
+                sendMessage(new Message(Header.LEFT, data));
             } catch (System.IO.IOException e) {
                 Console.WriteLine(e.ToString());
             }

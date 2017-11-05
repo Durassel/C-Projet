@@ -6,7 +6,7 @@ using System.IO;
 namespace Projet.authentification
 {
     [Serializable]
-    class Authentification : AuthentificationManager
+    public class Authentification : AuthentificationManager
     {
         private Dictionary<String, User> users;
 
@@ -14,8 +14,7 @@ namespace Projet.authentification
         {
             // Load users from file
             try {
-                this.load("users.txt");
-                Console.WriteLine("Loading is done");
+                this.load("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
             } catch (System.IO.IOException e) { // If an error occured, declaration of an empty users array
                 Console.WriteLine(e);
                 users = new Dictionary<string, User>();

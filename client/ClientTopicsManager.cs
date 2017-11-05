@@ -7,18 +7,13 @@ using static Projet.net.Message;
 
 namespace Projet.client
 {
-    class ClientTopicsManager : TCPClient, TopicsManager
+    public class ClientTopicsManager : TCPClient, TopicsManager
     {
         public List<String> listTopics()
         {
             try {
                 sendMessage(new Message(Header.LIST_TOPICS)); // Sending message
                 List<String> topics = getMessage().Data; // Receive list of topics
-                Console.WriteLine("The openned topics are : ");
-                foreach (String topic in topics)
-                {
-                    Console.WriteLine(topic);
-                }
                 return topics;
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());
@@ -35,7 +30,8 @@ namespace Projet.client
                 ClientChatroom chatroom = new ClientChatroom();
                 chatroom.setServer(Address, port);
                 chatroom.connect();
-                Thread thread = new Thread(chatroom.run).Start();
+                Thread thread = new Thread(chatroom.run);
+                thread.Start();
                 return chatroom;
             } catch (Exception e) {
                 Console.WriteLine(e.ToString());

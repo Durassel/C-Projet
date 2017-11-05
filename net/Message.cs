@@ -6,7 +6,7 @@ namespace Projet.net
     [Serializable]
     public class Message
     {
-        public enum Header { DEBUG, JOIN, POST, QUIT, GET, LIST_TOPICS, CREATE_TOPIC, JOIN_TOPIC } // Header of the message
+        public enum Header { JOIN, POST, QUIT, GET, LIST_TOPICS, CREATE_TOPIC, JOIN_TOPIC, JOINED, LEFT } // Header of the message
         public Header head;
         public List<String> data = new List<String>(); // Data of the message
 
@@ -37,9 +37,14 @@ namespace Projet.net
 
         public override string ToString()
         {
-            string str = this.head + " -> ";
+            string str = this.head + " ";
+            int i = 0;
             foreach (String s in this.data) {
+                if (i == 0) {
+                    str += "=> ";
+                }
                 str += s + " ";
+                i++;
             }
             return str;
         }

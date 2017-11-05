@@ -35,7 +35,10 @@ namespace Projet.chat
             // Check if the chatter is in the chatroom
             if (chatters.Contains(c)) {
                 chatters.Remove(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " leaved the chatroom.");
+                //Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " leaved the chatroom.");
+                foreach (Chatter chatter in chatters) {
+                    chatter.quitNotification(c);
+                }
             } else {
                 throw new Exception(c.Pseudo + " cannot leave the chatroom. He isn't in the chatroom.");
             }
@@ -46,7 +49,10 @@ namespace Projet.chat
             // Check if the chatter isn't in the chatroom
             if (!chatters.Contains(c)) {
                 chatters.Add(c);
-                Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " has join the chatroom.");
+                //Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " has join the chatroom.");
+                foreach (Chatter chatter in chatters) {
+                    chatter.joinNotification(c);
+                }
             } else {
                 throw new Exception(c.Pseudo + " cannot join the chatroom. He is already in the chatroom.");
             }

@@ -2,7 +2,7 @@
 
 namespace Projet.chat
 {
-    class TextChatter : Chatter
+    public class TextChatter : Chatter
     {
         private String pseudo;
         private String password;
@@ -33,6 +33,16 @@ namespace Projet.chat
         public void receiveAMessage(String message, Chatter c)
         {
             Console.WriteLine("(At " + pseudo + ") : " + c.Pseudo + " $> " + message);
+        }
+
+        public void joinNotification(Chatter c)
+        {
+            Console.WriteLine(c.Pseudo + " joined the chatroom.");
+        }
+
+        public void quitNotification(Chatter c)
+        {
+            Console.WriteLine(c.Pseudo + " disconnected from the chatroom.");
         }
     }
 }
