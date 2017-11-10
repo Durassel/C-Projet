@@ -8,5 +8,10 @@ namespace Projet.authentification
         {
 
         }
+
+        public override string Message
+        {
+            get { return "Wrong password."; }
+        }
     }
 }

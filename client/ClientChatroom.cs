@@ -1,4 +1,5 @@
-﻿using Projet.chat;
+﻿using projet.client;
+using Projet.chat;
 using Projet.net;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Projet.client
     public class ClientChatroom : TCPClient, Chatroom
     {
         private Chatter chatter;
+        private Transmittor transm = new Transmittor();
 
         public String Topic
         {
@@ -60,28 +62,17 @@ namespace Projet.client
                 Console.WriteLine(e.ToString());
             }
         }
-
         public void run()
         {
             try {
                 Message message;
                 while ((message = getMessage()) != null) {
-                    switch (message.head) {
-                        case Header.GET :
-                            if (chatter != null) {
-                                chatter.receiveAMessage(message.Data[1], new TextChatter(message.Data[0]));
-                            }
-                            break;
-                        case Header.JOINED:
-                            if (chatter != null) {
-                                chatter.joinNotification(new TextChatter(message.Data[0]));
-                            }
-                            break;
-                        case Header.LEFT :
-                            if (chatter != null) {
-                                chatter.quitNotification(new TextChatter(message.Data[0]));
-                            }
-                            break;
+                    if (chatter != null) {
+                        if (message.Data.Count > 1) {
+                            transm.raiseEvent(message.Data[1], new TextChatter(message.Data[0]), message.head);
+                        } else {
+                            transm.raiseEvent(new TextChatter(message.Data[0]), message.head);
+                        }
                     }
                 }
             } catch (System.IO.IOException e) {

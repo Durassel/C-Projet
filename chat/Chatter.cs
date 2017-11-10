@@ -4,9 +4,9 @@ namespace Projet.chat
 {
     public interface Chatter
     {
-        string Pseudo { get; set; }
-        string Password { get; set; }
-        void receiveAMessage(String msg, Chatter c);
+        String Pseudo { get; set; }
+        String Password { get; set; }
+        void receiveAMessage(String message, Chatter c);
         void joinNotification(Chatter c);
         void quitNotification(Chatter c);
     }

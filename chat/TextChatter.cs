@@ -1,4 +1,6 @@
-﻿using System;
+﻿using projet.client;
+using System;
+using static Projet.net.Message;
 
 namespace Projet.chat
 {
@@ -6,16 +8,19 @@ namespace Projet.chat
     {
         private String pseudo;
         private String password;
+        private Transmittor transm = new Transmittor();
 
         public TextChatter(String pseudo) : base()
         {
             this.pseudo = pseudo;
+            transm.AddReceiveDel(receiveMessage);
         }
 
         public TextChatter(String pseudo, String password) : base()
         {
             this.pseudo = pseudo;
             this.password = password;
+            transm.AddReceiveDel(receiveMessage);
         }
 
         public String Pseudo
@@ -28,6 +33,24 @@ namespace Projet.chat
         {
             get { return this.password; }
             set { this.password = value; }
+        }
+
+        public void receiveMessage(object sender, EventArgs e, String message, Chatter c, Header h)
+        {
+            if (c != null) {
+                switch (h) {
+                    case Header.GET:
+                        receiveAMessage(message, c);
+                        break;
+                    case Header.JOINED:
+                        joinNotification(c);
+                        break;
+                    case Header.LEFT:
+                        quitNotification(c);
+                        break;
+                }
+            }
+            transm.RemoveReceiveDel(receiveMessage);
         }
 
         public void receiveAMessage(String message, Chatter c)
