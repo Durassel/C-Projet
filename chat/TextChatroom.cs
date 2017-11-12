@@ -19,6 +19,11 @@ namespace Projet.chat
             get { return this.topic; }
         }
 
+        public List<Chatter> Chatters
+        {
+            get { return this.chatters; }
+        }
+
         public void post(String message, Chatter c)
         {
             // Check if the chatter is in the chatroom
@@ -35,7 +40,6 @@ namespace Projet.chat
             // Check if the chatter is in the chatroom
             if (chatters.Contains(c)) {
                 chatters.Remove(c);
-                //Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " leaved the chatroom.");
                 foreach (Chatter chatter in chatters) {
                     chatter.quitNotification(c);
                 }
@@ -49,7 +53,6 @@ namespace Projet.chat
             // Check if the chatter isn't in the chatroom
             if (!chatters.Contains(c)) {
                 chatters.Add(c);
-                //Console.WriteLine("(Message from Chatroom : " + topic + ") " + c.Pseudo + " has join the chatroom.");
                 foreach (Chatter chatter in chatters) {
                     chatter.joinNotification(c);
                 }

@@ -33,7 +33,7 @@ namespace Projet.server
                     nextPort++;
                 } while (!started);
             } catch (ChatroomExistsException e) { // TextTopicsManager.createTopic throws exception if this topic already exists
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.Message); // Côté serveur
             }
         }
 

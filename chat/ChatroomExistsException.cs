@@ -2,11 +2,18 @@
 
 namespace Projet.chat
 {
-    class ChatroomExistsException : Exception
+    public class ChatroomExistsException : Exception
     {
-        public ChatroomExistsException() : base("This chatroom already exists.")
+        public String chatroom;
+
+        public ChatroomExistsException(String chatroom) : base("The chatroom \"" + chatroom + "\" already exists.")
         {
-            
+            this.chatroom = chatroom;
+        }
+
+        public override string Message
+        {
+            get { return "The chatroom \"" + chatroom + "\" already exists."; }
         }
     }
 }

@@ -9,6 +9,7 @@ namespace projet.client
     public class Transmittor
     {
         private static event receiveDel multiReceive;
+
         protected virtual void onMyDel(object sender, EventArgs e, String message, Chatter c, Header h)
         {
             if (multiReceive != null) { // check for suscribers

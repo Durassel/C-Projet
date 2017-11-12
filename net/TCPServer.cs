@@ -10,11 +10,12 @@ namespace Projet.net
 {
     public abstract class TCPServer : MessageConnection, ICloneable
     {
-	    private enum Mode { treatClient, treatConnections } // Two mode : client request / connection request
+        private enum Mode { treatClient, treatConnections } // Two mode : client request / connection request
         private Mode mode = Mode.treatConnections;
         private TcpClient comm; // Communication
         private TcpListener wait; // Listener
         private int port;
+        private static Thread listenerThread;
 
         public int Port
         {
@@ -26,12 +27,14 @@ namespace Projet.net
             this.port = port;
             Console.WriteLine("Server started");
             wait = new TcpListener(new IPAddress(new byte[] { 127, 0, 0, 1 }), port);
-            new Thread(this.run).Start();
+            listenerThread = new Thread(this.run);
+            listenerThread.Start();
         }
 
         public void stopServer()
         {
             wait.Stop();
+            listenerThread.Join();
             Console.WriteLine("Server stopped");
         }
 
@@ -42,20 +45,18 @@ namespace Projet.net
 
         public void run()
         {
+            wait.Start();
             if (mode == Mode.treatConnections) {
-                while (true) {
-                    wait.Start(); // ~~~ bof ~~~
-                    try {
+                try {
+                    while (true) {
                         comm = wait.AcceptTcpClient(); // New client communication
-                        Console.WriteLine("Connection established @" + comm);
-                        TCPServer clone = (TCPServer)this.Clone();
+                        Console.WriteLine("Connection established to {0}", comm.Client.RemoteEndPoint);
+                        TCPServer clone = (TCPServer) this.Clone();
                         clone.mode = Mode.treatClient; // Change mode
                         new Thread(clone.run).Start();
-                    } catch (System.IO.IOException e) {
-                        //Console.WriteLine(e.ToString());
-                    } catch (SocketException e) {
-                        //Console.WriteLine(e.ToString());
                     }
+                } catch (Exception e) {
+                    Console.WriteLine(e.StackTrace);
                 }
             } else { // Manage client request
                 manageClient(comm);

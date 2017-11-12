@@ -20,8 +20,13 @@ namespace Projet.server
                             List<String> topics = tcpTopicsManager.listTopics();
                             sendMessage(new Message(Header.LIST_TOPICS, topics));
                             break;
-                        case Header.JOIN_TOPIC :
+                        case Header.LIST_MEMBERS:
                             String topic = message.Data[0];
+                            List<String> members = tcpTopicsManager.listMembers(topic);
+                            sendMessage(new Message(Header.LIST_MEMBERS, members));
+                            break;
+                        case Header.JOIN_TOPIC :
+                            topic = message.Data[0];
                             sendMessage(new Message(Header.JOIN_TOPIC, (tcpTopicsManager.getTopicPort(topic)).ToString()));
                             break;
                         case Header.CREATE_TOPIC :

@@ -50,7 +50,6 @@ namespace Projet.server
                             break;
                         case Header.POST :
                             textChatroom.post(message.Data[1], this);
-
                             break;
                         case Header.QUIT :
                             textChatroom.quit(this);

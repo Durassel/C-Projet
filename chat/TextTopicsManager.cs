@@ -14,6 +14,22 @@ namespace Projet.chat
             return topics;
         }
 
+        public List<String> listMembers(String topic)
+        {
+            // Return members
+            List<Chatter> chatters = chatrooms[topic].Chatters;
+            List<String> members = new List<String>();
+            foreach (Chatter chatter in chatters) {
+                members.Add(chatter.Pseudo);
+            }
+            Console.WriteLine("List members : ");
+            foreach(String member in members)
+            {
+                Console.WriteLine(member);
+            }
+            return members;
+        }
+
         public Chatroom joinTopic(String topic)
         {
             // Return the chatroom of this topic
@@ -26,7 +42,7 @@ namespace Projet.chat
             if (!chatrooms.ContainsKey(topic)) {
                 chatrooms[topic] = new TextChatroom(topic);
             } else {
-                throw new ChatroomExistsException();
+                throw new ChatroomExistsException(topic);
             }
 	    }
     }

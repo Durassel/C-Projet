@@ -27,6 +27,22 @@ namespace Projet.client
             }
         }
 
+        public List<Chatter> Chatters
+        {
+            get {
+                List<Chatter> chatters = new List<Chatter>();
+                try {
+                    Message message = getMessage();
+                    foreach (String chatter in message.Data) {
+                        chatters.Add(new TextChatter(chatter));
+                    }
+                } catch (Exception e) {
+                    Console.WriteLine(e.ToString());
+                }
+                return chatters;
+            }
+        }
+
         public void join(Chatter c)
         {
             try {
@@ -56,12 +72,11 @@ namespace Projet.client
         {
             try {
                 sendMessage(new Message(Header.QUIT, c.Pseudo));
-                Thread.Sleep(500);
-                this.disconnect(); // Close connection between client and server when clients receive notification
             } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.StackTrace);
             }
         }
+
         public void run()
         {
             try {

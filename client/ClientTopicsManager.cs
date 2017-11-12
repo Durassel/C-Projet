@@ -21,6 +21,20 @@ namespace Projet.client
             }
         }
 
+        public List<String> listMembers(String topic)
+        {
+            try {
+                List<String> data = new List<String>();
+                data.Add(topic);
+                sendMessage(new Message(Header.LIST_MEMBERS, data)); // Sending message
+                List<String> members = getMessage().Data; // Receive list of topics
+                return members;
+            } catch (Exception e) {
+                Console.WriteLine(e.ToString());
+                return null;
+            }
+        }
+
         public Chatroom joinTopic(String topic)
         {
             try {
@@ -41,11 +55,8 @@ namespace Projet.client
 
         public void createTopic(String topic)
         {
-            try {
-                sendMessage(new Message(Header.CREATE_TOPIC, topic)); // Sending message : server perform it
-            } catch (Exception e) {
-                Console.WriteLine(e.ToString());
-            }
+            sendMessage(new Message(Header.CREATE_TOPIC, topic)); // Sending message : server perform it
+            
         }
     }
 }
