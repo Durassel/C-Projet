@@ -60,6 +60,8 @@ namespace Client
             this.messageBox.Location = new System.Drawing.Point(208, 69);
             this.messageBox.Multiline = true;
             this.messageBox.Name = "messageBox";
+            this.messageBox.ReadOnly = true;
+            this.messageBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.messageBox.Size = new System.Drawing.Size(510, 379);
             this.messageBox.TabIndex = 0;
             // 
@@ -228,6 +230,7 @@ namespace Client
             // 
             // Form2
             // 
+            this.AcceptButton = this.sendButton;
             this.ClientSize = new System.Drawing.Size(732, 553);
             this.Controls.Add(this.listMembers);
             this.Controls.Add(this.topicMembersLabel);
@@ -243,6 +246,7 @@ namespace Client
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form2";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form2_FormClosed);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

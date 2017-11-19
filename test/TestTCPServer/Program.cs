@@ -14,7 +14,7 @@ namespace Projet
                 server.startServer(2453);
                 server.stopServer(); // Don't interrupt the thread server listener : wait in while(true)
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
     }

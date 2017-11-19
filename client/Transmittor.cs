@@ -20,10 +20,13 @@ namespace projet.client
         public void raiseEvent(String message, Chatter c, Header h)
         {
             onMyDel(this, EventArgs.Empty, message, c, h);
-        }        public void raiseEvent(Chatter c, Header h)
+        }
+
+        public void raiseEvent(Chatter c, Header h)
         {
             onMyDel(this, EventArgs.Empty, null, c, h);
-        }
+        }
+
         public void AddReceiveDel(receiveDel recDel)
         {
             multiReceive += recDel;
@@ -34,5 +37,4 @@ namespace projet.client
             multiReceive -= recDel;
         }
     }
-
 }

@@ -21,19 +21,19 @@ namespace Projet.server
                 // Initialization of TCPTopicsManager attribute
                 tcpChatrooms[topic] = serverChatroom;
                 // Search a valid port to start the chatroom
-                bool started = true;
+                Boolean validPort = true;
                 do {
                     try {
                         serverChatroom.startServer(nextPort); // An exception occured when another process use this port
-                        started = true;
+                        validPort = true;
                     } catch (SocketException e) {
-                        started = false;
-                        Console.WriteLine(e.ToString());
+                        validPort = false;
+                        Console.WriteLine(e);
                     }
                     nextPort++;
-                } while (!started);
+                } while (!validPort);
             } catch (ChatroomExistsException e) { // TextTopicsManager.createTopic throws exception if this topic already exists
-                Console.WriteLine(e.Message); // Côté serveur
+                throw e;
             }
         }
 

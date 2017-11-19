@@ -6,7 +6,7 @@ namespace Projet.net
     [Serializable]
     public class Message
     {
-        public enum Header { JOIN, POST, QUIT, GET, LIST_MEMBERS, LIST_TOPICS, CREATE_TOPIC, JOIN_TOPIC, JOINED, LEFT } // Header of the message
+        public enum Header { REGISTRATION, LOGIN, ERROR, JOIN, POST, QUIT, GET, LIST_MEMBERS, LIST_TOPICS, CREATE_TOPIC, JOIN_TOPIC, JOINED, LEFT } // Different types of the message
         public Header head;
         public List<String> data = new List<String>(); // Data of the message
 

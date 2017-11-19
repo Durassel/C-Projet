@@ -1,8 +1,10 @@
 ﻿using Projet.authentification;
 using Projet.client;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Windows.Forms;
+using static Projet.net.Message;
 
 namespace Client
 {
@@ -18,31 +20,33 @@ namespace Client
             Boolean error = false;
             String pseudo = usernameBox.Text;
             String password = passwordText.Text;
-
-            if (pseudo.Equals("")) {
-                MessageBox.Show("Use an username", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else if (password == "") {
-                MessageBox.Show("Use a password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } else {
-                try {
-                    Authentification auth = new Authentification();
-                    auth.authentify(pseudo, password);
-                } catch (UserUnknownException exception) {
-                    error = true;
-                    MessageBox.Show(exception.Message, exception.titleError(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } catch (WrongPasswordException exception) {
-                    error = true;
-                    MessageBox.Show(exception.Message, exception.titleError(), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-
             ClientTopicsManager client = new ClientTopicsManager();
+
             try { // Client connection to the server
                 client.setServer("127.0.0.1", 2453);
                 client.connect();
             } catch (SocketException exception) {
                 error = true;
                 MessageBox.Show(exception.Message, "Error server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            if (pseudo.Equals("")) {
+                MessageBox.Show("Use an username", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else if (password == "") {
+                MessageBox.Show("Use a password", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            } else {
+                List<String> log = new List<String>();
+                log.Add(pseudo);
+                log.Add(password);
+
+                client.sendMessage(new Projet.net.Message(Header.LOGIN, log));
+                Projet.net.Message response = client.getMessage();
+                if (response.Data[0].Equals("ok")) {
+                    error = false;
+                } else {
+                    error = true;
+                    MessageBox.Show(response.Data[0], "Login error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             if (error == false) {
@@ -56,19 +60,32 @@ namespace Client
         {
             String pseudo = usernameBox.Text;
             String password = passwordText.Text;
- 
+            ClientTopicsManager client = new ClientTopicsManager();
+
+            try { // Client connection to the server
+                client.setServer("127.0.0.1", 2453);
+                client.connect();
+            } catch (SocketException exception) {
+                MessageBox.Show(exception.Message, "Error server", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
             if (pseudo.Equals("")) {
                 MessageBox.Show("Use an username", "Error");
             } else if (password == "") {
                 MessageBox.Show("Use a password", "Error");
             } else {
-                try {
-                    Authentification var = new Authentification();
-                    var.addUser(pseudo, password);
-                    var.save("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
+                List<String> log = new List<String>();
+                log.Add(pseudo);
+                log.Add(password);
+
+                client.sendMessage(new Projet.net.Message(Header.REGISTRATION, log));
+                Projet.net.Message response = client.getMessage();
+
+                if (response.Data[0] == "ok") {
                     MessageBox.Show("Successful registration !", "Sign up", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                } catch (UserExistsException exception) {
-                    MessageBox.Show(exception.Message, exception.titleError(), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } else {
+                    MessageBox.Show(response.Data[0], "Sign up error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace Projet.chat
     class TextChatroom : Chatroom
     {
         private List<Chatter> chatters = new List<Chatter>(); // List of chatters in this chatroom
-        private String topic; // Subject of this chatroom
+        private String topic; // Topic of this chatroom
 
         public TextChatroom(String topic)
         {
@@ -28,7 +28,7 @@ namespace Projet.chat
         {
             // Check if the chatter is in the chatroom
             if (chatters.Contains(c)) {
-                foreach (Chatter chatter in chatters) {
+                foreach (Chatter chatter in chatters) { // Send message to all chatters
                     chatter.receiveAMessage(message, c);
                 }
             } else {
@@ -40,7 +40,7 @@ namespace Projet.chat
             // Check if the chatter is in the chatroom
             if (chatters.Contains(c)) {
                 chatters.Remove(c);
-                foreach (Chatter chatter in chatters) {
+                foreach (Chatter chatter in chatters) { // Send message to all chatters
                     chatter.quitNotification(c);
                 }
             } else {
@@ -53,7 +53,7 @@ namespace Projet.chat
             // Check if the chatter isn't in the chatroom
             if (!chatters.Contains(c)) {
                 chatters.Add(c);
-                foreach (Chatter chatter in chatters) {
+                foreach (Chatter chatter in chatters) { // Send message to all chatters
                     chatter.joinNotification(c);
                 }
             } else {

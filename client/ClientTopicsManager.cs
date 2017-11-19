@@ -16,7 +16,7 @@ namespace Projet.client
                 List<String> topics = getMessage().Data; // Receive list of topics
                 return topics;
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -27,10 +27,10 @@ namespace Projet.client
                 List<String> data = new List<String>();
                 data.Add(topic);
                 sendMessage(new Message(Header.LIST_MEMBERS, data)); // Sending message
-                List<String> members = getMessage().Data; // Receive list of topics
+                List<String> members = getMessage().Data; // Receive list of members
                 return members;
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
                 return null;
             }
         }
@@ -48,15 +48,18 @@ namespace Projet.client
                 thread.Start();
                 return chatroom;
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
                 return null;
             }
         }
 
         public void createTopic(String topic)
         {
-            sendMessage(new Message(Header.CREATE_TOPIC, topic)); // Sending message : server perform it
-            
+            try {
+                sendMessage(new Message(Header.CREATE_TOPIC, topic)); // Sending message : server perform it
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
         }
     }
 }

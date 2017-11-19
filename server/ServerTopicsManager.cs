@@ -1,4 +1,6 @@
-﻿using Projet.net;
+﻿using Projet.authentification;
+using Projet.chat;
+using Projet.net;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -31,12 +33,39 @@ namespace Projet.server
                             break;
                         case Header.CREATE_TOPIC :
                             topic = message.Data[0];
-                            tcpTopicsManager.createTopic(topic);
+                            try {
+                                tcpTopicsManager.createTopic(topic);
+                                sendMessage(new Message(Header.ERROR, "ok"));
+                            } catch (ChatroomExistsException e) {
+                                sendMessage(new Message(Header.ERROR, e.Message));
+                            }
+                            break;
+                        case Header.REGISTRATION:
+                            Authentification auth = new Authentification();
+                            try {
+                                auth.addUser(message.Data[0], message.Data[1]);
+                                sendMessage(new Message(Header.ERROR, "ok"));
+                            } catch (UserExistsException e) {
+                                sendMessage(new Message(Header.ERROR, e.Message));
+                            }
+                            break;
+                        case Header.LOGIN:
+                            auth = new Authentification();
+                            try {
+                                auth.authentify(message.Data[0], message.Data[1]);
+                                sendMessage(new Message(Header.ERROR, "ok"));
+                            } catch (UserUnknownException e) {
+                                sendMessage(new Message(Header.ERROR, e.Message));
+                            } catch (WrongPasswordException e) {
+                                sendMessage(new Message(Header.ERROR, e.Message));
+                            } catch (UserConnectedException e) {
+                                sendMessage(new Message(Header.ERROR, e.Message));
+                            }
                             break;
                     }
                 }
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
     }

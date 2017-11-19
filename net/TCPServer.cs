@@ -56,7 +56,7 @@ namespace Projet.net
                         new Thread(clone.run).Start();
                     }
                 } catch (Exception e) {
-                    Console.WriteLine(e.StackTrace);
+                    Console.WriteLine(e);
                 }
             } else { // Manage client request
                 manageClient(comm);
@@ -74,16 +74,21 @@ namespace Projet.net
                 Console.WriteLine("Server receive : " + message);
                 return message;
             } catch (Exception e) {
+                Console.WriteLine(e);
                 return null;
             }
         }
 	
         public void sendMessage(Message message)
         {
-            Console.WriteLine("Server send : " + message);
-            IFormatter formatter = new BinaryFormatter();
-            NetworkStream stream = comm.GetStream();
-            formatter.Serialize(stream, message);
+            try {
+                Console.WriteLine("Server send : " + message);
+                IFormatter formatter = new BinaryFormatter();
+                NetworkStream stream = comm.GetStream();
+                formatter.Serialize(stream, message);
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
         }
     }
 }

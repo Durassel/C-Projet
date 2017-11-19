@@ -40,13 +40,7 @@ namespace Projet.server
                         case Header.JOIN :
                             pseudo = message.Data[0];
                             password = message.Data[1];
-                            Authentification a = new Authentification();
-                            try { // Test user authentification
-                                a.authentify(pseudo, password);
-                                textChatroom.join(this);
-                            } catch (Exception e) {
-                                Console.WriteLine(e);
-                            }
+                            textChatroom.join(this); // No need to authentify, done before
                             break;
                         case Header.POST :
                             textChatroom.post(message.Data[1], this);
@@ -57,19 +51,19 @@ namespace Projet.server
                     }
                 }
             } catch (Exception e) {
-                Console.WriteLine(e.ToString());
+                Console.WriteLine(e);
             }
         }
 
         public void receiveAMessage(String message, Chatter c)
         {
-            List<String> data = new List<String>(2);
+            List<String> data = new List<String>();
             data.Add(c.Pseudo);
             data.Add(message);
             try {
                 sendMessage(new Message(Header.GET, data));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
 
@@ -79,8 +73,8 @@ namespace Projet.server
             data.Add(c.Pseudo);
             try {
                 sendMessage(new Message(Header.JOINED, data));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
 
@@ -90,8 +84,8 @@ namespace Projet.server
             data.Add(c.Pseudo);
             try {
                 sendMessage(new Message(Header.LEFT, data));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
     }

@@ -3,7 +3,6 @@ using Projet.chat;
 using Projet.net;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using static Projet.net.Message;
 
 namespace Projet.client
@@ -21,7 +20,7 @@ namespace Projet.client
                     Message message = getMessage();
                     topic = message.Data[0];
                 } catch (Exception e) {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e);
                 }
                 return topic;
             }
@@ -37,7 +36,7 @@ namespace Projet.client
                         chatters.Add(new TextChatter(chatter));
                     }
                 } catch (Exception e) {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(e);
                 }
                 return chatters;
             }
@@ -46,25 +45,25 @@ namespace Projet.client
         public void join(Chatter c)
         {
             try {
-                List<String> data = new List<String>(2);
+                List<String> data = new List<String>();
                 data.Add(c.Pseudo);
                 data.Add(c.Password);
                 sendMessage(new Message(Header.JOIN, data));
                 chatter = c;
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
 
         public void post(String message, Chatter c)
         {
             try {
-                List<String> data = new List<String>(2);
+                List<String> data = new List<String>();
                 data.Add(c.Pseudo);
                 data.Add(message);
                 sendMessage(new Message(Header.POST, data));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
 
@@ -72,8 +71,8 @@ namespace Projet.client
         {
             try {
                 sendMessage(new Message(Header.QUIT, c.Pseudo));
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.StackTrace);
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
 
@@ -84,14 +83,14 @@ namespace Projet.client
                 while ((message = getMessage()) != null) {
                     if (chatter != null) {
                         if (message.Data.Count > 1) {
-                            transm.raiseEvent(message.Data[1], new TextChatter(message.Data[0]), message.head);
+                            transm.raiseEvent(message.Data[1], new TextChatter(message.Data[0]), message.head); // Get message
                         } else {
-                            transm.raiseEvent(new TextChatter(message.Data[0]), message.head);
+                            transm.raiseEvent(new TextChatter(message.Data[0]), message.head); // Notification
                         }
                     }
                 }
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
     }

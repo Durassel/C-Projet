@@ -31,7 +31,7 @@ namespace Projet
                 Chatter chatter = new TextChatter("bob", "123");
                 chatroom.join(chatter);
 
-                chatroom.post("mon super message", chatter);
+                chatroom.post("nouveau message", chatter);
                 Thread.Sleep(10000);
                 chatroom.quit(chatter);
             }

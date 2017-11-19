@@ -16,16 +16,11 @@ namespace Projet.chat
 
         public List<String> listMembers(String topic)
         {
-            // Return members
+            // Return members of a chatroom
             List<Chatter> chatters = chatrooms[topic].Chatters;
             List<String> members = new List<String>();
             foreach (Chatter chatter in chatters) {
                 members.Add(chatter.Pseudo);
-            }
-            Console.WriteLine("List members : ");
-            foreach(String member in members)
-            {
-                Console.WriteLine(member);
             }
             return members;
         }

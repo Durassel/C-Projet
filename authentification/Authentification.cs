@@ -15,7 +15,7 @@ namespace Projet.authentification
             // Load users from file
             try {
                 this.load("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
-            } catch (System.IO.IOException e) { // If an error occured, declaration of an empty users array
+            } catch (Exception e) { // If an error occured, declaration of an empty users array
                 Console.WriteLine(e);
                 users = new Dictionary<string, User>();
             }
@@ -26,18 +26,32 @@ namespace Projet.authentification
             // Check if this user doesn't exist
             if (!users.ContainsKey(login)) {
                 users[login] = new User(login, password);
+                save("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
             } else {
                 throw new UserExistsException(login);
             }
 	    }
 
+        public void updateUser(String login, Boolean connected)
+        {
+            if (users.ContainsKey(login)) {
+                users[login].Connected = connected;
+                save("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
+            } else {
+                throw new UserUnknownException(login);
+            }
+        }
+
         public void removeUser(String login)
         {
             // Check if the user exists
-            if (!users.ContainsKey(login)) {
+            if (users.ContainsKey(login)) {
+                users.Remove(login);
+                save("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
+            } else {
                 throw new UserUnknownException(login);
             }
-            users.Remove(login);
+            
         }
 
         public void authentify(String login, String password)
@@ -50,6 +64,12 @@ namespace Projet.authentification
             if (users[login].Password.CompareTo(password) != 0) {
                 throw new WrongPasswordException(login);
             }
+            // Check if the user isn't already connected
+            if (users[login].Connected == true) {
+                throw new UserConnectedException(login);
+            }
+            users[login].Connected = true; // Connect the user if any exception has thrown
+            this.save("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
         }
 
         public AuthentificationManager load(String path)
@@ -59,8 +79,8 @@ namespace Projet.authentification
                 BinaryFormatter binaryf = new BinaryFormatter();
                 users = (Dictionary<String, User>) binaryf.Deserialize(input);
                 input.Close();
-            } catch (System.TypeLoadException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
             return null;
         }
@@ -72,8 +92,8 @@ namespace Projet.authentification
                 BinaryFormatter binaryf = new BinaryFormatter();
                 binaryf.Serialize(output, users);
                 output.Close();
-            } catch (System.IO.IOException e) {
-                Console.WriteLine(e.ToString());
+            } catch (Exception e) {
+                Console.WriteLine(e);
             }
         }
     }

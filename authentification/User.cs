@@ -7,28 +7,36 @@ namespace Projet.authentification
     {
         private String login;
         private String password;
+        private Boolean connected;
 
         public User(String login, String password) : base()
         {
             this.login = login;
             this.password = password;
+            this.connected = false;
         }
 
         public String Login
         {
-            get { return this.login; }
-            set { this.login = value; }
+            get { return login; }
+            set { login = value; }
         }
 
         public String Password
         {
-            get { return this.password; }
-            set { this.password = value; }
+            get { return password; }
+            set { password = value; }
+        }
+
+        public Boolean Connected
+        {
+            get { return connected; }
+            set { connected = value; }
         }
 
         public override string ToString()
         {
-            return "Login : " + this.login + " / password : " + this.password;
+            return "Login : " + login + " / password : " + password + " / connected : " + connected;
         }
     }
 }

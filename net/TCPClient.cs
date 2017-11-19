@@ -48,15 +48,20 @@ namespace Projet.net
                 Console.WriteLine("Client receive : " + message);
                 return message;
             } catch (Exception e) {
+                Console.WriteLine(e);
                 return null;
             }
         }
 
         public void sendMessage(Message message)
         {
-            IFormatter formatter = new BinaryFormatter();
-            NetworkStream stream = client.GetStream();
-            formatter.Serialize(stream, message);
+            try {
+                IFormatter formatter = new BinaryFormatter();
+                NetworkStream stream = client.GetStream();
+                formatter.Serialize(stream, message);
+            } catch (Exception e) {
+                Console.WriteLine(e);
+            }
         }
     }
 }

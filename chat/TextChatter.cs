@@ -8,7 +8,7 @@ namespace Projet.chat
     {
         private String pseudo;
         private String password;
-        private Transmittor transm = new Transmittor();
+        private Transmittor transm = new Transmittor(); // UI Listener
 
         public TextChatter(String pseudo) : base()
         {
