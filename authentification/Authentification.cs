@@ -15,9 +15,9 @@ namespace Projet.authentification
             // Load users from file
             try {
                 this.load("C:\\Users\\Frédéric\\Desktop\\EFREI\\2017-2018\\Semestre 1\\C#\\Project\\Projet\\Projet\\bin\\Debug\\users.txt");
-            } catch (Exception e) { // If an error occured, declaration of an empty users array
+            } catch (IOException e) { // If an error occured, declaration of an empty users array
                 Console.WriteLine(e);
-                users = new Dictionary<string, User>();
+                users = new Dictionary<String, User>();
             }
         }
 
@@ -74,27 +74,21 @@ namespace Projet.authentification
 
         public AuthentificationManager load(String path)
         {
-            try { // Deserialization of users (cast the stream from file)
-                FileStream input = new FileStream(path, FileMode.Open);
-                BinaryFormatter binaryf = new BinaryFormatter();
-                users = (Dictionary<String, User>) binaryf.Deserialize(input);
-                input.Close();
-            } catch (Exception e) {
-                Console.WriteLine(e);
-            }
+            // Deserialization of users (cast the stream from file)
+            FileStream input = new FileStream(path, FileMode.Open);
+            BinaryFormatter binaryf = new BinaryFormatter();
+            users = (Dictionary<String, User>) binaryf.Deserialize(input);
+            input.Close();
             return null;
         }
 
         public void save(String path)
         {
-            try { // Serialization of users
-                FileStream output = new FileStream(path, FileMode.Create);
-                BinaryFormatter binaryf = new BinaryFormatter();
-                binaryf.Serialize(output, users);
-                output.Close();
-            } catch (Exception e) {
-                Console.WriteLine(e);
-            }
+            // Serialization of users
+            FileStream output = new FileStream(path, FileMode.Create);
+            BinaryFormatter binaryf = new BinaryFormatter();
+            binaryf.Serialize(output, users);
+            output.Close();
         }
     }
 }
