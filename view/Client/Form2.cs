@@ -241,5 +241,13 @@ namespace Client
         {
             disconnectToolStripMenuItem_Click(sender, e);
         }
+
+        private void deleteAccountToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            disconnectToolStripMenuItem_Click(sender, e);
+            // Remove user from file
+            Authentification auth = new Authentification();
+            auth.removeUser(pseudo);
+        }
     }
 }

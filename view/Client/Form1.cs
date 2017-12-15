@@ -41,7 +41,9 @@ namespace Client
 
                 client.sendMessage(new Projet.net.Message(Header.LOGIN, log));
                 Projet.net.Message response = client.getMessage();
-                if (response.Data[0].Equals("ok")) {
+                if (response == null) {
+                    error = true; // Exception occured : server not started
+                } else if (response.Data[0].Equals("ok")) {
                     error = false;
                 } else {
                     error = true;
@@ -82,7 +84,9 @@ namespace Client
                 client.sendMessage(new Projet.net.Message(Header.REGISTRATION, log));
                 Projet.net.Message response = client.getMessage();
 
-                if (response.Data[0] == "ok") {
+                if (response == null) {
+                    // Exception occured : server not started
+                } else if (response.Data[0] == "ok") {
                     MessageBox.Show("Successful registration !", "Sign up", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 } else {
                     MessageBox.Show(response.Data[0], "Sign up error", MessageBoxButtons.OK, MessageBoxIcon.Error);

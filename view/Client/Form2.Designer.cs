@@ -51,6 +51,7 @@ namespace Client
             this.chatLabel = new System.Windows.Forms.Label();
             this.topicMembersLabel = new System.Windows.Forms.Label();
             this.listMembers = new System.Windows.Forms.ListBox();
+            this.deleteAccountToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -146,7 +147,8 @@ namespace Client
             // fichierToolStripMenuItem
             // 
             this.fichierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.disconnectToolStripMenuItem});
+            this.disconnectToolStripMenuItem,
+            this.deleteAccountToolStripMenuItem});
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(64, 24);
             this.fichierToolStripMenuItem.Text = "Fichier";
@@ -154,7 +156,7 @@ namespace Client
             // disconnectToolStripMenuItem
             // 
             this.disconnectToolStripMenuItem.Name = "disconnectToolStripMenuItem";
-            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(157, 26);
+            this.disconnectToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
             this.disconnectToolStripMenuItem.Text = "Disconnect";
             this.disconnectToolStripMenuItem.Click += new System.EventHandler(this.disconnectToolStripMenuItem_Click);
             // 
@@ -228,6 +230,13 @@ namespace Client
             this.listMembers.Size = new System.Drawing.Size(182, 164);
             this.listMembers.TabIndex = 19;
             // 
+            // deleteAccountToolStripMenuItem
+            // 
+            this.deleteAccountToolStripMenuItem.Name = "deleteAccountToolStripMenuItem";
+            this.deleteAccountToolStripMenuItem.Size = new System.Drawing.Size(184, 26);
+            this.deleteAccountToolStripMenuItem.Text = "Delete account";
+            this.deleteAccountToolStripMenuItem.Click += new System.EventHandler(this.deleteAccountToolStripMenuItem_Click);
+            // 
             // Form2
             // 
             this.AcceptButton = this.sendButton;
@@ -273,5 +282,6 @@ namespace Client
         private Label chatLabel;
         private Label topicMembersLabel;
         private ListBox listMembers;
+        private ToolStripMenuItem deleteAccountToolStripMenuItem;
     }
 }

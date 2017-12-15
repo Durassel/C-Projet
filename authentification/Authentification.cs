@@ -51,7 +51,6 @@ namespace Projet.authentification
             } else {
                 throw new UserUnknownException(login);
             }
-            
         }
 
         public void authentify(String login, String password)

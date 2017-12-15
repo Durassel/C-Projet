@@ -35,6 +35,7 @@ namespace Projet.chat
                 throw new Exception("The message cannot be sent. Sender isn't in the chatroom.");
             }
         }
+
         public void quit(Chatter c)
         {
             // Check if the chatter is in the chatroom
